@@ -59,12 +59,18 @@ button:focus-visible {
 }
 
 #app {
+  width: 100%;
+  height: calc(100vh);
   /* max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center; */
 }
-
+.page-container {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  padding: 20px;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
