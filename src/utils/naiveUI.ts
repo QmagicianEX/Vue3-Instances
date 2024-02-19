@@ -1,5 +1,6 @@
 import {
   create,
+  NMessageProvider,
   NButton,
   NIcon,
   NFlex,
@@ -9,5 +10,5 @@ import {
 } from 'naive-ui'
 
 export const naiveUI = create({
-  components: [NButton, NIcon, NFlex, NLayout, NLayoutSider, NMenu]
+  components: [NMessageProvider, NButton, NIcon, NFlex, NLayout, NLayoutSider, NMenu]
 })

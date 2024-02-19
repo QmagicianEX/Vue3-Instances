@@ -1,34 +1,36 @@
 <template>
-  <n-flex vertical style="height: 100%">
-    <n-layout has-sider>
-      <n-layout-sider
-        bordered
-        collapse-mode="width"
-        :collapsed-width="64"
-        :width="240"
-        :collapsed="collapsed"
-        show-trigger
-        @collapse="collapsed = true"
-        @expand="collapsed = false"
-      >
-        <n-flex align="center" justify="space-around" class="system-logo-name">
-          <img src="@/assets/favicon.ico" width="50" />
-          <span class="system-name">VUE3 INSTANCES</span>
-        </n-flex>
-        <n-menu
-          v-model:value="activeKey"
-          :collapsed="collapsed"
+  <n-message-provider>
+    <n-flex vertical style="height: 100%">
+      <n-layout has-sider>
+        <n-layout-sider
+          bordered
+          collapse-mode="width"
           :collapsed-width="64"
-          :collapsed-icon-size="22"
-          :options="menuOptions"
-          @update:value="handleMenuChange"
-        />
-      </n-layout-sider>
-      <n-layout>
-        <router-view />
+          :width="240"
+          :collapsed="collapsed"
+          show-trigger
+          @collapse="collapsed = true"
+          @expand="collapsed = false"
+        >
+          <n-flex align="center" justify="space-around" class="system-logo-name">
+            <img src="@/assets/favicon.ico" width="50" />
+            <span class="system-name">VUE3 INSTANCES</span>
+          </n-flex>
+          <n-menu
+            v-model:value="activeKey"
+            :collapsed="collapsed"
+            :collapsed-width="64"
+            :collapsed-icon-size="22"
+            :options="menuOptions"
+            @update:value="handleMenuChange"
+          />
+        </n-layout-sider>
+        <n-layout>
+          <router-view />
+        </n-layout>
       </n-layout>
-    </n-layout>
-  </n-flex>
+    </n-flex>
+  </n-message-provider>
 </template>
 
 <script setup lang="ts">

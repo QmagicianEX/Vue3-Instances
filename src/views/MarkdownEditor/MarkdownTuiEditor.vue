@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container" id="md-page-container">
     <div id="editor" style="width: 100%; height: 100%;"/>
     <n-flex justify="end" class="operation-container">
       <n-button type="primary" @click="saveToLocal"><n-icon size="16"><SaveOutline /></n-icon>保存到本地</n-button>
@@ -18,9 +18,11 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { SaveOutline } from '@vicons/ionicons5'
 import { PaperPlaneOutline } from '@vicons/ionicons5'
 import axios from 'axios'
+import { useMessage } from 'naive-ui'
 
-let editor: Editor|null = null;
+let editor: Editor|null = null
 let htmlText = ref('')
+let message = useMessage()
 
 onMounted(() => {
   editor = new Editor({
@@ -32,10 +34,10 @@ onMounted(() => {
       // 在添加图片文件之前执行的钩子
       addImageBlobHook: (blob, callback) => {
         if (blob.size > 2 * 1024 * 1024) { // 2MB
-          alert('文件大小不能超过2MB.');
+          message.warning('文件大小不能超过2MB.');
           return;
         }
-        // 如果文件大小合适，则继续上传处理
+        // 如果文件大小合适，则继续上传处理，也可以上传到远程，直接使用远程地址
         const reader = new FileReader();
         reader.onload = function(e) {
           const url = e.target!.result;
@@ -45,6 +47,9 @@ onMounted(() => {
       }
     }
   });
+  editor!.setHeight(((document.getElementById('md-page-container')?.clientHeight || 700) - 100) + 'px')
+
+  // 从远程获取已保存的markdown内容，还原上次编辑
   let fileName = 'test.md'
   axios.get('/api/getDocumentMarkdown', {
     params: { filename: fileName }
@@ -57,7 +62,7 @@ onMounted(() => {
   });
 });
 
-// 可按需添加头尾，请注意，需要将样式表文件放在下载文件的同一目录下，不然样式会不生效
+// 可按需添加头尾，请注意，需要将样式表文件(@toast-ui/editor/dist/toastui-editor.css，可在node_modules中获取)放在下载文件的同一目录下，不然样式会不生效
 var addHtmlHeadTail = (title='Document', htmlText: String='') => {
   let head = `<!doctype html>
 <html lang="en">
@@ -104,7 +109,7 @@ var saveMarkdown = () => {
   const formData = new FormData();
   formData.append("file", file);
   // 步骤3: 使用Fetch API上传文件到服务器
-  fetch('/api//uploadHelpDocument', { // 更换为您的服务器端点
+  fetch('/api/uploadHelpDocument', { // 更换为您的服务器端点
     method: 'POST',
     body: formData
   })
