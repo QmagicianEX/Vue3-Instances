@@ -5,6 +5,7 @@ import { h, Component } from 'vue'
 import {
   HomeOutline,
   LogoMarkdown,
+  ImageOutline,
 } from '@vicons/ionicons5'
 import { NIcon } from 'naive-ui'
 function renderIcon (icon: Component) {
@@ -45,6 +46,32 @@ const routes = [
           title: 'TuiEditor'
         },
         component: () => import('../views/MarkdownEditor/MarkdownTuiEditor.vue')
+      },
+    ]
+  },
+  {
+    path: '/ImageEditor',
+    name: 'ImageEditor',
+    icon: renderIcon(ImageOutline),
+    meta: {
+      title: '图像编辑器'
+    },
+    children: [
+      {
+        path: '/FabricEditor',
+        name: 'FabricEditor',
+        meta: {
+          title: 'Fabric'
+        },
+        component: () => import('../views/ImageEditor/FabricEditor.vue')
+      },
+      {
+        path: '/LeaferEditor',
+        name: 'LeaferEditor',
+        meta: {
+          title: 'Leafer'
+        },
+        component: () => import('../views/ImageEditor/LeaferEditor.vue')
       },
     ]
   },
